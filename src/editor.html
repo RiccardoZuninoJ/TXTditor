@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
+
+    <title>Txtditor</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script defer src="editor.js"></script>
+
+    <link rel="stylesheet" href="codemirror.css">
+    <script src="codemirror.js"></script>
+  </head>
+  <body style="min-height: 100%;">
+      <!--textarea id="textarea" class="textarea is-family-code	" style="resize: none; min-height: 100vh"></textarea -->
+      <textarea id="textarea" class="" style="min-height: 100vh"></textarea>
+
+  </body>
+  <script>
+     var editor = CodeMirror.fromTextArea(document.getElementById("textarea"), {
+            styleActiveLine: true,
+            lineNumbers: true,
+            matchBrackets: true
+        });
+  </script>
+</html>
