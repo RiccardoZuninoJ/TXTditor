@@ -43,11 +43,25 @@ let menu = Menu.buildFromTemplate([
     label: 'File',
     submenu: [
       {
+        label: 'New File',
+        click: function(){
+          mainWindow.webContents.send('new-file', 'New file');
+          
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
         label: 'Save',
         click: function(){
           mainWindow.webContents.send('save', 'Saving file');
           
-        }
+        },
+        sublabel: 'CTRL+S'
+      },
+      {
+        type: 'separator'
       },
       {
         label: 'Save as',
@@ -55,6 +69,9 @@ let menu = Menu.buildFromTemplate([
           mainWindow.webContents.send('save-as', 'Saving file');
                     
         }
+      },
+      {
+        type: 'separator'
       },
       {
         label: 'Open',
@@ -131,9 +148,8 @@ ipcMain.on('save-file', (event, arg) => {
         return dialog.showErrorBox("Error while saving", toString(err));
     })
     dialog.showMessageBox({"message": "File saved successfully!"});
+    mainWindow.webContents.send('saved', path);
   }
-
-  mainWindow.webContents.send('saved', path);
 });
 
 ipcMain.on('save-notas', (event, arg) => {

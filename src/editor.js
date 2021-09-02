@@ -19,9 +19,12 @@ document.getElementById('textarea').addEventListener('keydown', function(e) {
     }
   });
 
+//CTRL+S
+//To-do
+
 ipc.on('save', (event, message) => {
     let content = editor.getValue();
-    if(openedFile == "")
+    if(openedFile === "")
     {
         ipc.send('save-file', content);
     }else
@@ -45,14 +48,54 @@ ipc.on('open', (event, message) => {
         let data = fs.readFileSync(message[0], 'utf-8');
         editor.setValue(data);
         openedFile = message[0];
-        
+        document.title = "Txtditor | " + message[0];
+        changeMode();
     }catch(err)
     {
         console.log("Error! " + err);
     }
 
+
 })
 
 ipc.on('saved', (event, message) => {
     openedFile = message;
+    document.title = "Txtditor | " + openedFile;
+    changeMode();
 })
+
+ipc.on('new-file', (event, message) => {
+    openedFile = "";
+    editor.setValue("");
+    document.title = "Txtditor";
+});
+
+function changeMode()
+{
+    extension = openedFile.split('.').pop();
+
+    switch(extension){
+        case 'js':{
+            
+            editor.setOption("mode", "javascript");
+            console.log("Javascript mode enabled");
+            break;
+        }
+        case 'c':{
+            editor.setOption("mode", "clike");
+            console.log("Clike mode enabled");
+            break;
+        }
+        case 'py':{
+            editor.setOption("mode", "python");
+            console.log("Python mode enabled");
+            break;
+        }
+        case 'html':{
+            editor.setOption("mode", "htmlmixed");
+
+            console.log("HTMLmixed mode enabled");
+            break;
+        }
+    }
+}
