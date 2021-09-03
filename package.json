@@ -1,8 +1,8 @@
 {
-  "name": "screel",
-  "productName": "screel",
+  "name": "txtditor",
+  "productName": "txtditor",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Text editor based on Electron.",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -19,7 +19,9 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "src/icon.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
@@ -40,13 +42,21 @@
         {
           "name": "@electron-forge/maker-rpm",
           "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-wix",
+          "config": {
+            "ui": {
+              "chooseDirectory": true
+            }
+          }
         }
       ]
     }
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "monaco-editor": "^0.27.0"
+    "@electron-forge/maker-wix": "^6.0.0-beta.60",
+    "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.60",

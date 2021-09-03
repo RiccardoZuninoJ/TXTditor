@@ -30,7 +30,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -44,6 +44,7 @@ let menu = Menu.buildFromTemplate([
     submenu: [
       {
         label: 'New File',
+        accelerator: process.platform === 'darwin' ? 'Cmd+n' : 'Ctrl+n',
         click: function(){
           mainWindow.webContents.send('new-file', 'New file');
           
@@ -54,11 +55,11 @@ let menu = Menu.buildFromTemplate([
       },
       {
         label: 'Save',
+        accelerator: process.platform === 'darwin' ? 'Cmd+s' : 'Ctrl+s',
         click: function(){
           mainWindow.webContents.send('save', 'Saving file');
           
         },
-        sublabel: 'CTRL+S'
       },
       {
         type: 'separator'
@@ -75,6 +76,7 @@ let menu = Menu.buildFromTemplate([
       },
       {
         label: 'Open',
+        accelerator: process.platform === 'darwin' ? 'Cmd+o' : 'Ctrl+o',
         click: function(){
           let fileToOpen = dialog.showOpenDialogSync();
           if(fileToOpen != undefined){
@@ -147,7 +149,7 @@ ipcMain.on('save-file', (event, arg) => {
       if(err != null)
         return dialog.showErrorBox("Error while saving", toString(err));
     })
-    dialog.showMessageBox({"message": "File saved successfully!"});
+    dialog.showMessageBox({"title": "Saved","message": "File saved successfully!"});
     mainWindow.webContents.send('saved', path);
   }
 });
@@ -158,7 +160,7 @@ ipcMain.on('save-notas', (event, arg) => {
       if(err != null)
         return dialog.showErrorBox("Error while saving", toString(err));
     })
-    dialog.showMessageBox({"message": "File saved successfully!"});
+    dialog.showMessageBox({"title": "Saved", "message": "File saved successfully!"});
 });
 
 ipcMain.on('open-file', (event, arg) => {
